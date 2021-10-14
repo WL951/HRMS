@@ -2,11 +2,14 @@
   <el-menu
     class="el-menu-vertical-demo"
     :collapse="isCollapse">
-    <el-container>
+    <div class="logo">
       <h3 v-show="isCollapse">HRMS</h3>
-      <h3 v-show="!isCollapse">人力资源管理系统</h3>
-    </el-container>
-
+      <h3 v-show="!isCollapse">人力资源管理</h3>
+    </div>
+    <div class="logo-hidden">
+      <h3 v-show="isCollapse">HRMS</h3>
+      <h3 v-show="!isCollapse">人力资源管理</h3>
+    </div>
     <el-menu-item :index="item.path" v-for="item in noChildren" :key="item.path" @click="clickMenu(item)">
       <i :class="'el-icon-' + item.icon"></i>
       <span slot="title">{{ item.label }}</span>
@@ -23,7 +26,6 @@
         </el-menu-item>
       </el-menu-item-group>
     </el-submenu>
-
   </el-menu>
 </template>
 
@@ -104,3 +106,15 @@
     }
   };
 </script>
+
+<style>
+  .el-menu-vertical-demo .logo, .el-menu-vertical-demo .logo-hidden{
+    width: 100%;
+    z-index: 1000;
+    height: 60px;
+    background-color: palevioletred;
+  }
+  .el-menu-vertical-demo .logo{
+    position: fixed;
+  }
+</style>
