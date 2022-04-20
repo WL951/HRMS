@@ -30,6 +30,7 @@
   }
   .el-aside{
     background: #545c64;
+    transition: width 1s;
   }
   .el-header{
     background-color: #42b983;
