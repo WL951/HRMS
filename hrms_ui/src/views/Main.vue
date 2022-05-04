@@ -33,7 +33,6 @@
     transition: width 1s;
   }
   .el-header{
-    background-color: #42b983;
     z-index: 1001; /* 头部的z-index必须要大于菜单栏头部的z-index，否则会菜单栏头部会覆盖头部 */
   }
   .el-main{
