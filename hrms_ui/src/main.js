@@ -1,20 +1,50 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-import Vue from 'vue';
-import App from './App';
-import router from './router';
-import ElementUI from 'element-ui'; // 新添加
-import 'element-ui/lib/theme-chalk/index.css'; // 新添加，避免后期打包样式不同，要放在import
-import store from './store';
+import Vue from 'vue'
 
-Vue.use(ElementUI);// 新添加
-Vue.config.productionTip = false;
+import Cookies from 'js-cookie'
 
-/* eslint-disable no-new */
+import 'normalize.css/normalize.css'
+
+import Element from 'element-ui'
+//
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
+
+// 数据字典
+import dict from './components/Dict'
+
+// 权限指令
+import checkPer from '@/utils/permission'
+import permission from './components/Permission'
+import './assets/styles/element-variables.scss'
+// global css
+import './assets/styles/index.scss'
+
+// 代码高亮
+import VueHighlightJS from 'vue-highlightjs'
+import 'highlight.js/styles/atom-one-dark.css'
+
+import App from './App'
+import store from './store'
+import router from './router/routers'
+
+import './assets/icons' // icon
+import './router/index' // permission control
+import 'echarts-gl'
+
+Vue.use(checkPer)
+Vue.use(VueHighlightJS)
+Vue.use(mavonEditor)
+Vue.use(permission)
+Vue.use(dict)
+Vue.use(Element, {
+  size: Cookies.get('size') || 'small' // set element-ui default size
+})
+
+Vue.config.productionTip = false
+
 new Vue({
   el: '#app',
   router,
   store,
-  components: { App },
-  template: '<App/>'
-});
+  render: h => h(App)
+})
