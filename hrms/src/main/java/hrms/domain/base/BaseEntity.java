@@ -1,41 +1,52 @@
 package hrms.domain.base;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.LastModifiedBy;
-import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 import java.lang.reflect.Field;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Data
 @MappedSuperclass
 public class BaseEntity implements Serializable {
 
+    @TableId(value = "id", type = IdType.UUID)
+    @ApiModelProperty(value = "唯一标识", hidden = true)
+    private Integer id;
+
     @CreatedBy
-    @Column(name = "create_by", updatable = false)
+    @TableField(exist = true, value = "create_by")
     @ApiModelProperty(value = "创建人", hidden = true)
     private String createBy;
 
     @LastModifiedBy
-    @Column(name = "update_by")
+    @TableField(exist = true, value = "update_by")
     @ApiModelProperty(value = "更新人", hidden = true)
     private String updateBy;
 
-    @CreationTimestamp
-    @Column(name = "create_time", updatable = false)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @TableField(exist = true, value = "create_time")
     @ApiModelProperty(value = "创建时间", hidden = true)
-    private Timestamp createTime;
+    private LocalDateTime createTime;
 
-    @UpdateTimestamp
-    @Column(name = "update_time")
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @TableField(exist = true, value = "update_time")
     @ApiModelProperty(value = "更新时间", hidden = true)
-    private Timestamp updateTime;
+    private LocalDateTime updateTime;
 
     /* 分组校验 */
     public @interface Update {}
